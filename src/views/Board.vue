@@ -22,6 +22,11 @@
             draggable
             @dragstart="pickUpTask($event, $taskIndex, $columnIndex)"
             @click="gotToTask(task)"
+            @dragover.prevent
+            @dragenter.prevent
+            @drop.stop="
+              moveTaskOrColumn($event, column.tasks, $columnIndex, $taskIndex)
+            "
           >
             <span class="w-full flex-no-shrink font-bold">
               {{ task.name }}
@@ -79,7 +84,7 @@ export default {
     pickUpTask(e, taskIndex, fromColumnIndex) {
       e.dataTransfer.effectAllowed = 'move'
       e.dataTransfer.dropEffect = 'move'
-      e.dataTransfer.setData('task-index', taskIndex)
+      e.dataTransfer.setData('from-task-index', taskIndex)
       e.dataTransfer.setData('from-column-index', fromColumnIndex)
       e.dataTransfer.setData('type', 'task')
     },
@@ -89,10 +94,14 @@ export default {
       e.dataTransfer.setData('from-column-index', fromColumnIndex)
       e.dataTransfer.setData('type', 'column')
     },
-    moveTaskOrColumn(e, toTasks, toColumnIndex) {
+    moveTaskOrColumn(e, toTasks, toColumnIndex, toTaskIndex) {
       const type = e.dataTransfer.getData('type')
       if (type === 'task') {
-        this.moveTask(e, toTasks)
+        this.moveTask(
+          e,
+          toTasks,
+          toTaskIndex !== undefined ? toTaskIndex : toTasks.length
+        )
       } else {
         this.moveColum(e, toColumnIndex)
       }
@@ -104,14 +113,15 @@ export default {
         toColumnIndex
       })
     },
-    moveTask(e, toTasks) {
+    moveTask(e, toTasks, toTaskIndex) {
       const fromColumnIndex = e.dataTransfer.getData('from-column-index')
-      const taskIndex = e.dataTransfer.getData('task-index')
+      const fromTaskIndex = e.dataTransfer.getData('from-task-index')
       const fromTasks = this.board.columns[fromColumnIndex].tasks
       this.$store.commit('MOVE_TASK', {
         fromTasks,
+        fromTaskIndex,
         toTasks,
-        taskIndex
+        toTaskIndex
       })
     }
   }
