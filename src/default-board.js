@@ -7,19 +7,22 @@ export default {
       name: 'todo',
       tasks: [
         {
-          description: '',
+          description:
+            't is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout',
           name: 'first task',
           id: uuid(),
           userAssigned: null
         },
         {
-          description: '',
+          description:
+            't is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout',
           name: 'second task',
           id: uuid(),
           userAssigned: null
         },
         {
-          description: '',
+          description:
+            't is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout',
           name: 'and thrid',
           id: uuid(),
           userAssigned: null
@@ -30,7 +33,8 @@ export default {
       name: 'in-progress',
       tasks: [
         {
-          description: '',
+          description:
+            't is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout',
           name: 'first task',
           id: uuid(),
           userAssigned: null
@@ -41,7 +45,8 @@ export default {
       name: 'done',
       tasks: [
         {
-          description: '',
+          description:
+            't is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout',
           name: 'first task',
           id: uuid(),
           userAssigned: null
