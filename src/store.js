@@ -1,16 +1,20 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import defaultBoard from './default-board'
-import { saveStatePlugin, uuid } from './utils'
+import VuexPersist from 'vuex-persist'
+import { uuid } from './utils'
 
 Vue.use(Vuex)
 
-const board = JSON.parse(localStorage.getItem('board')) || defaultBoard
+const vuexPersist = new VuexPersist({
+  key: 'vue-trello',
+  storage: window.localStorage
+})
 
 export default new Vuex.Store({
-  plugins: [saveStatePlugin],
+  plugins: [vuexPersist.plugin],
   state: {
-    board
+    board: defaultBoard
   },
   getters: {
     getTask(state) {
